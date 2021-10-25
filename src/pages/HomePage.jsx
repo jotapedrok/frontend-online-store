@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class HomePages extends React.Component {
   render() {
@@ -15,6 +16,7 @@ class HomePages extends React.Component {
             placeholder="Pesquisar..."
           />
         </label>
+        <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
         <button
           type="button"
         >
