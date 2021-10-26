@@ -9,7 +9,7 @@ class Category extends React.Component {
   }
 
   render() {
-    const { categories } = this.props;
+    const { categories, setProductsFromCategory } = this.props;
     return (
       <div>
         { categories.map((category) => (
@@ -21,7 +21,8 @@ class Category extends React.Component {
               data-testid="category"
               name="category"
               type="radio"
-              value={ category.name }
+              value={ category.id }
+              onClick={ setProductsFromCategory }
             />
             {category.name}
           </label>
@@ -34,6 +35,7 @@ class Category extends React.Component {
 Category.propTypes = {
   setCategories: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setProductsFromCategory: PropTypes.func.isRequired,
 };
 
 export default Category;

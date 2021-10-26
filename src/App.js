@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import { getCategories } from './services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
 import './App.css';
 import Cart from './pages/Cart';
 import Category from './components/Category';
@@ -11,7 +11,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       categories: [],
+      products: [],
+      query: '',
     };
+  }
+
+  handleChange = ({ target }) => {
+    const { value, name } = target;
+    this.setState({ [name]: value });
   }
 
   setCategories = async () => {
@@ -19,20 +26,43 @@ class App extends React.Component {
     this.setState({ categories: data });
   }
 
+  onClickSearchBtn = async () => {
+    const { query, category } = this.state;
+    const data = await getProductsFromCategoryAndQuery(category, query);
+    const result = await data.results;
+    this.setState({ products: result });
+  }
+
+  setProductsFromCategory = async (event) => {
+    this.handleChange(event);
+    const { target } = event;
+    const category = target.value;
+    const { query } = this.state;
+    const data = await getProductsFromCategoryAndQuery(category, query);
+    const result = await data.results;
+    this.setState({ products: result });
+  }
+
   render() {
-    const { categories } = this.state;
+    const { categories, products } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
           <Category
             setCategories={ this.setCategories }
             categories={ categories }
+            setProductsFromCategory={ this.setProductsFromCategory }
+            handleChange={ this.handleChange }
           />
           <Switch>
             <Route
               exact
               path="/"
-              component={ HomePage }
+              render={ () => (<HomePage
+                products={ products }
+                handleChange={ this.handleChange }
+                onClickSearchBtn={ this.onClickSearchBtn }
+              />) }
             />
             <Route
               exact
