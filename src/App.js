@@ -11,22 +11,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       categories: [],
-      searchInput: '',
-      products: {
-        results: [],
-      },
-      selectedCategory: '',
+      products: [],
+      query: '',
     };
   }
 
   handleChange = ({ target }) => {
-    const { name, value } = target;
+    const { value, name } = target;
     this.setState({ [name]: value });
-  }
-
-  getProducts = async (category = undefined, query = undefined) => {
-    const data = await getProductsFromCategoryAndQuery(category, query);
-    this.setState({ products: data });
   }
 
   setCategories = async () => {
@@ -34,17 +26,32 @@ class App extends React.Component {
     this.setState({ categories: data });
   }
 
+  onClickSearchBtn = async () => {
+    const { query, category } = this.state;
+    const data = await getProductsFromCategoryAndQuery(category, query);
+    const result = await data.results;
+    this.setState({ products: result });
+  }
+
+  setProductsFromCategory = async (event) => {
+    this.handleChange(event);
+    const { target } = event;
+    const category = target.value;
+    const { query } = this.state;
+    const data = await getProductsFromCategoryAndQuery(category, query);
+    const result = await data.results;
+    this.setState({ products: result });
+  }
+
   render() {
-    const { categories,
-      searchInput,
-      products,
-      selectedCategory } = this.state;
+    const { categories, products } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
           <Category
             setCategories={ this.setCategories }
             categories={ categories }
+            setProductsFromCategory={ this.setProductsFromCategory }
             handleChange={ this.handleChange }
           />
           <Switch>
@@ -52,11 +59,9 @@ class App extends React.Component {
               exact
               path="/"
               render={ () => (<HomePage
-                handleChange={ this.handleChange }
-                searchInput={ searchInput }
                 products={ products }
-                getProducts={ this.getProducts }
-                selectedCategory={ selectedCategory }
+                handleChange={ this.handleChange }
+                onClickSearchBtn={ this.onClickSearchBtn }
               />) }
             />
             <Route

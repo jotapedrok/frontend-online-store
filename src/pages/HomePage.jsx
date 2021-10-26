@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -43,7 +44,9 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const { handleChange, products } = this.props;
+    const { products,
+      handleChange,
+      onClickSearchBtn } = this.props;
     return (
       <section
         className="homePage-main"
@@ -52,11 +55,11 @@ class HomePage extends React.Component {
           htmlFor="homePageInput"
         >
           <input
-            name="searchInput"
+            data-testid="query-input"
             type="text"
             id="homePageInput"
+            name="query"
             placeholder="Pesquisar..."
-            data-testid="query-input"
             onChange={ handleChange }
           />
         </label>
@@ -64,30 +67,36 @@ class HomePage extends React.Component {
         <button
           type="button"
           data-testid="query-button"
-          onClick={ this.onClickBtn }
+          onClick={ onClickSearchBtn }
         >
           Pesquisar
         </button>
-        { this.checkInputTxt() }
-        { products.results.map((product) => (
-          <Card
-            key={ product.id }
-            product={ product }
-          />
-        ))}
+        { products.length === 0 && (
+          <h2
+            data-testid="home-initial-message"
+          >
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </h2>
+        )}
+        { products.map((product) => {
+          const { id, thumbnail, title, price } = product;
+          return (
+            <div key={ id } data-testid="product">
+              <h4>{title}</h4>
+              <img src={ thumbnail } alt={ title } />
+              <p>{price}</p>
+            </div>
+          );
+        }) }
       </section>
     );
   }
 }
 
-HomePage.propTypes = {
-  searchInput: PropTypes.string.isRequired,
+HomePages.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  getProducts: PropTypes.func.isRequired,
-  selectedCategory: PropTypes.string.isRequired,
-  products: PropTypes.shape({
-    results: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
+  onClickSearchBtn: PropTypes.func.isRequired,
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default HomePage;
+export default HomePages;
