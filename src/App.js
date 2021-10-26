@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+import Details from './pages/Details';
 import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
 import './App.css';
 import Cart from './pages/Cart';
@@ -13,6 +14,7 @@ class App extends React.Component {
       categories: [],
       products: [],
       query: '',
+      category: '',
     };
   }
 
@@ -44,7 +46,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { categories, products } = this.state;
+    const { categories, products, category, query } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
@@ -68,6 +70,16 @@ class App extends React.Component {
               exact
               path="/cart"
               component={ Cart }
+            />
+            <Route
+              exact
+              path="/details/:id"
+              render={ (props) => (<Details
+                products={ products }
+                category={ category }
+                query={ query }
+                { ...props }
+              />) }
             />
           </Switch>
         </BrowserRouter>

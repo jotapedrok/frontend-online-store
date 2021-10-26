@@ -19,7 +19,7 @@ class Category extends React.Component {
           >
             <input
               data-testid="category"
-              name="selectedCategory"
+              name="category"
               type="radio"
               value={ category.id }
               onClick={ setProductsFromCategory }
