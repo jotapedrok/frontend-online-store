@@ -41,7 +41,7 @@ export default class Details extends Component {
         <h1 data-testid="product-detail-name">{title}</h1>
         <h3>{price}</h3>
         <img src={ thumbnail } alt={ title } />
-        <p>DETALHES</p>
+        <br />
         <button
           type="button"
           data-testid="product-detail-add-to-cart"
@@ -50,6 +50,49 @@ export default class Details extends Component {
           } }
         >
           Adicionar ao Carrinho
+        </button>
+        <p>DETALHES</p>
+        <label htmlFor="email">
+          Digite seu email
+          <input type="email" name="email" id="email" />
+        </label>
+        <label htmlFor="1">
+          1
+          <input type="radio" name="rate" id="1" value="1" />
+        </label>
+        <label htmlFor="2">
+          2
+          <input type="radio" name="rate" id="2" value="2" />
+        </label>
+        <label htmlFor="3">
+          3
+          <input type="radio" name="rate" id="3" value="3" />
+        </label>
+        <label htmlFor="4">
+          4
+          <input type="radio" name="rate" id="4" value="4" />
+        </label>
+        <label htmlFor="5">
+          5
+          <input type="radio" name="rate" id="5" value="5" />
+        </label>
+        <br />
+        <label htmlFor="text">
+          Adicione seu cometario
+          <textarea
+            data-testid="product-detail-evaluation"
+            name="text"
+            id="text"
+            placeholder="Digite seu comentario"
+            cols="30"
+            rows="10"
+          />
+        </label>
+        <br />
+        <button
+          type="button"
+        >
+          Enviar comentario
         </button>
       </div>
     );
