@@ -31,12 +31,22 @@ export default class Details extends Component {
   render() {
     const { product } = this.state;
     const { id, thumbnail, title, price } = product;
+    const { setProductToCart } = this.props;
     return (
       <div id={ id }>
         <h1 data-testid="product-detail-name">{title}</h1>
         <h3>{price}</h3>
         <img src={ thumbnail } alt={ title } />
         <p>DETALHES</p>
+        <button
+          type="button"
+          data-testid="product-add-to-cart"
+          onClick={ () => {
+            setProductToCart(id, title, thumbnail, price);
+          } }
+        >
+          Adicionar ao Carrinho
+        </button>
       </div>
     );
   }
@@ -52,4 +62,5 @@ Details.propTypes = {
     },
   ).isRequired,
   query: PropTypes.string.isRequired,
+  setProductToCart: PropTypes.func.isRequired,
 };

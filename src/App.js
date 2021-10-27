@@ -77,7 +77,7 @@ class App extends React.Component {
                 setCategories={ this.setCategories }
                 categories={ categories }
                 setProductsFromCategory={ this.setProductsFromCategory }
-                setProductsToCart={ this.setProductToCart }
+                setProductToCart={ this.setProductToCart }
               />) }
             />
             <Route
@@ -92,6 +92,7 @@ class App extends React.Component {
                 products={ products }
                 category={ category }
                 query={ query }
+                setProductToCart={ this.setProductToCart }
                 { ...props }
               />) }
             />
