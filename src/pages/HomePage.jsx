@@ -2,16 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Card from '../components/Card';
+import Category from '../components/Category';
 
 class HomePage extends React.Component {
   render() {
     const { products,
       handleChange,
-      onClickSearchBtn } = this.props;
+      onClickSearchBtn,
+      categories,
+      setCategories,
+      setProductsFromCategory,
+      setProductsToCart } = this.props;
     return (
       <section
         className="homePage-main"
       >
+        <Category
+          setCategories={ setCategories }
+          categories={ categories }
+          setProductsFromCategory={ setProductsFromCategory }
+          handleChange={ handleChange }
+        />
         <label
           htmlFor="homePageInput"
         >
@@ -43,6 +54,7 @@ class HomePage extends React.Component {
           <Card
             key={ product.id }
             product={ product }
+            setProductsToCart={ setProductsToCart }
           />
         )) }
       </section>
@@ -51,9 +63,13 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleChange: PropTypes.func.isRequired,
   onClickSearchBtn: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setCategories: PropTypes.func.isRequired,
+  setProductsFromCategory: PropTypes.func.isRequired,
+  setProductsToCart: PropTypes.func.isRequired,
 };
 
 export default HomePage;
