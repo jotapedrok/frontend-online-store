@@ -5,7 +5,6 @@ import Details from './pages/Details';
 import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
 import './App.css';
 import Cart from './pages/Cart';
-import Category from './components/Category';
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +34,23 @@ class App extends React.Component {
     this.setState({ products: result });
   }
 
+  setProductToCart = (id, title, thumbnail, price) => {
+    const product = {
+      id,
+      title,
+      thumbnail,
+      price,
+    };
+    const lastCart = JSON.parse(localStorage.getItem('Cart'));
+    if (lastCart) {
+      const cart = [...lastCart, product];
+      localStorage.setItem('Cart', JSON.stringify(cart));
+    } else {
+      const cart = [product];
+      localStorage.setItem('Cart', JSON.stringify(cart));
+    }
+  }
+
   setProductsFromCategory = async (event) => {
     this.handleChange(event);
     const { target } = event;
@@ -50,12 +66,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <BrowserRouter>
-          <Category
-            setCategories={ this.setCategories }
-            categories={ categories }
-            setProductsFromCategory={ this.setProductsFromCategory }
-            handleChange={ this.handleChange }
-          />
           <Switch>
             <Route
               exact
@@ -64,6 +74,10 @@ class App extends React.Component {
                 products={ products }
                 handleChange={ this.handleChange }
                 onClickSearchBtn={ this.onClickSearchBtn }
+                setCategories={ this.setCategories }
+                categories={ categories }
+                setProductsFromCategory={ this.setProductsFromCategory }
+                setProductsToCart={ this.setProductToCart }
               />) }
             />
             <Route
