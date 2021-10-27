@@ -40,11 +40,19 @@ class App extends React.Component {
       title,
       thumbnail,
       price,
+      quantity: 1,
     };
     const lastCart = JSON.parse(localStorage.getItem('Cart'));
     if (lastCart) {
-      const cart = [...lastCart, product];
-      localStorage.setItem('Cart', JSON.stringify(cart));
+      const ifExist = lastCart.find((element) => element.id === product.id);
+      if (ifExist) {
+        ifExist.quantity += 1;
+        const cart = [...lastCart];
+        localStorage.setItem('Cart', JSON.stringify(cart));
+      } else {
+        const cart = [...lastCart, product];
+        localStorage.setItem('Cart', JSON.stringify(cart));
+      }
     } else {
       const cart = [product];
       localStorage.setItem('Cart', JSON.stringify(cart));
