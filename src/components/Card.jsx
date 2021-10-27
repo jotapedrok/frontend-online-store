@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default class Card extends Component {
   render() {
-    const { product, setProductsToCart } = this.props;
+    const { product, setProductToCart } = this.props;
     const { id,
       title,
       price,
@@ -20,7 +20,7 @@ export default class Card extends Component {
           type="button"
           data-testid="product-add-to-cart"
           onClick={ () => {
-            setProductsToCart(id, title, thumbnail, price);
+            setProductToCart(id, title, thumbnail, price);
           } }
         >
           Adicionar ao Carrinho
@@ -37,7 +37,7 @@ Card.propTypes = {
     thumbnail: PropTypes.string,
     price: PropTypes.number,
   }),
-  setProductsToCart: PropTypes.func.isRequired,
+  setProductToCart: PropTypes.func,
 };
 
 Card.defaultProps = {
@@ -47,4 +47,5 @@ Card.defaultProps = {
     thumbnail: '',
     price: '',
   },
+  setProductToCart: () => {},
 };
