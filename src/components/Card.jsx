@@ -37,7 +37,7 @@ Card.propTypes = {
     thumbnail: PropTypes.string,
     price: PropTypes.number,
   }),
-  setProductToCart: PropTypes.func.isRequired,
+  setProductToCart: PropTypes.func,
 };
 
 Card.defaultProps = {
@@ -47,4 +47,5 @@ Card.defaultProps = {
     thumbnail: '',
     price: '',
   },
+  setProductToCart: () => {},
 };

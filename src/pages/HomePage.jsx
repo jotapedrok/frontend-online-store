@@ -12,7 +12,7 @@ class HomePage extends React.Component {
       categories,
       setCategories,
       setProductsFromCategory,
-      setProductsToCart } = this.props;
+      setProductToCart } = this.props;
     return (
       <section
         className="homePage-main"
@@ -54,7 +54,7 @@ class HomePage extends React.Component {
           <Card
             key={ product.id }
             product={ product }
-            setProductsToCart={ setProductsToCart }
+            setProductToCart={ setProductToCart }
           />
         )) }
       </section>
@@ -69,7 +69,11 @@ HomePage.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   setCategories: PropTypes.func.isRequired,
   setProductsFromCategory: PropTypes.func.isRequired,
-  setProductsToCart: PropTypes.func.isRequired,
+  setProductToCart: PropTypes.func,
+};
+
+HomePage.defaultProps = {
+  setProductToCart: () => {},
 };
 
 export default HomePage;
