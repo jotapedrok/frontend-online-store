@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Card from '../components/Card';
 import Category from '../components/Category';
+import Bag from '../components/Bag';
 
 class HomePage extends React.Component {
   render() {
@@ -12,7 +12,8 @@ class HomePage extends React.Component {
       categories,
       setCategories,
       setProductsFromCategory,
-      setProductToCart } = this.props;
+      setProductToCart,
+      cart } = this.props;
     return (
       <section
         className="homePage-main"
@@ -35,7 +36,9 @@ class HomePage extends React.Component {
             onChange={ handleChange }
           />
         </label>
-        <Link data-testid="shopping-cart-button" to="/cart">Carrinho</Link>
+        <Bag
+          cart={ cart }
+        />
         <button
           type="button"
           data-testid="query-button"
@@ -70,6 +73,7 @@ HomePage.propTypes = {
   setCategories: PropTypes.func.isRequired,
   setProductsFromCategory: PropTypes.func.isRequired,
   setProductToCart: PropTypes.func,
+  cart: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 HomePage.defaultProps = {
