@@ -15,7 +15,19 @@ class App extends React.Component {
       products: [],
       query: '',
       category: '',
+      cart: [],
     };
+  }
+
+  componentDidMount() {
+    this.getCartFromLocalStorage();
+  }
+
+  getCartFromLocalStorage() {
+    const cart = JSON.parse(localStorage.getItem('Cart'));
+    if (cart) {
+      this.setState({ cart });
+    }
   }
 
   handleChange = ({ target }) => {
@@ -50,13 +62,16 @@ class App extends React.Component {
         ifExist.quantity += 1;
         const cart = [...lastCart];
         localStorage.setItem('Cart', JSON.stringify(cart));
+        this.getCartFromLocalStorage();
       } else {
         const cart = [...lastCart, product];
         localStorage.setItem('Cart', JSON.stringify(cart));
+        this.getCartFromLocalStorage();
       }
     } else {
       const cart = [product];
       localStorage.setItem('Cart', JSON.stringify(cart));
+      this.getCartFromLocalStorage();
     }
   }
 
@@ -71,7 +86,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { categories, products, category, query } = this.state;
+    const { categories, products, category, query, cart } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
@@ -87,6 +102,7 @@ class App extends React.Component {
                 categories={ categories }
                 setProductsFromCategory={ this.setProductsFromCategory }
                 setProductToCart={ this.setProductToCart }
+                cart={ cart }
               />) }
             />
             <Route
@@ -103,6 +119,7 @@ class App extends React.Component {
                 query={ query }
                 setProductToCart={ this.setProductToCart }
                 { ...props }
+                cart={ cart }
               />) }
             />
             <Route

@@ -135,8 +135,7 @@ export default class Cart extends Component {
       <div>
         <h3>ITENS NO CARRINHO:</h3>
         <h3>
-          {cart.length}
-
+          <p>{cart.reduce((acc, curr) => (acc + curr.quantity), 0)}</p>
         </h3>
         { this.renderCart() }
       </div>
