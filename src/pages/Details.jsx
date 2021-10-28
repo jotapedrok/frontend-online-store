@@ -26,7 +26,13 @@ export default class Details extends Component {
     const data = await getProductsFromCategoryAndQuery(category, query);
     const result = await data.results;
     const prod = result.find((iten) => iten.id === id);
-    this.setState({ product: prod });
+    if (prod) {
+      this.setState({ product: prod });
+    } else {
+      const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
+      const result2 = await response.json();
+      this.setState({ product: result2 });
+    }
   }
 
   render() {

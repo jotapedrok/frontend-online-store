@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Checkout from './pages/Checkout';
 import HomePage from './pages/HomePage';
 import Details from './pages/Details';
 import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
@@ -103,6 +104,10 @@ class App extends React.Component {
                 setProductToCart={ this.setProductToCart }
                 { ...props }
               />) }
+            />
+            <Route
+              path="/checkout"
+              component={ Checkout }
             />
           </Switch>
         </BrowserRouter>
